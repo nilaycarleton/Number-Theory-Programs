@@ -2,11 +2,12 @@
 
 ## Overview
 
-This repository contains five programs that demonstrate fundamental programming concepts while exploring interesting mathematical properties:
+This repository contains six programs that demonstrate fundamental programming concepts while exploring interesting mathematical properties:
 - Finding all divisors of a number
 - Identifying prime numbers
 - Discovering narcissistic (Armstrong) numbers
 - Triangle inequality theorem validation
+- Lucas–Lehmer test for Mersenne primes
 - Interactive range-based number analysis
 
 ## Programs
@@ -165,6 +166,37 @@ These side lengths can't form a triangle.
 
 ---
 
+### 6. Lucas–Lehmer Test for Mersenne Primes (`lucas_lehmer.py`)
+
+Determines whether a number of the form \(M_p = 2^p - 1\) (a Mersenne number) is prime using the classic Lucas–Lehmer test.
+
+**Concept:** The Lucas–Lehmer test is a deterministic primality test specifically for Mersenne numbers. It iteratively computes a sequence modulo \(M_p\); after \(p-2\) steps, \(M_p\) is prime iff the residue is zero.
+
+**Usage:**
+```bash
+python lucas_lehmer.py
+```
+The script includes a demonstration that tests known Mersenne primes (exponents up to 127) and a few composite exponents.
+
+**Example:**
+```python
+>>> from lucas_lehmer import lucas_lehmer
+>>> lucas_lehmer(13)
+True   # M_13 = 8191 is prime
+>>> lucas_lehmer(11)
+False  # M_11 = 2047 = 23 * 89
+```
+
+**Algorithm:**
+1. Compute \(M = 2^p - 1\).
+2. Initialize \(s = 4\).
+3. Repeat \(p-2\) times: \(s \leftarrow (s^2 - 2) \bmod M\).
+4. If \(s = 0\), \(M\) is prime; otherwise composite.
+
+**Mathematical documentation:** A detailed scholarly exposition of the test, its history, and its theoretical underpinnings is available in [`docs/lucas_lehmer.md`](docs/lucas_lehmer.md).
+
+---
+
 ## Requirements
 
 - Python 3.x
@@ -185,6 +217,7 @@ python primeNumbers.py
 python narcissisticNumbers.py
 python part1Q1.py
 python part1Q2.py
+python lucas_lehmer.py
 ```
 
 ## Mathematical Concepts Covered
@@ -207,6 +240,11 @@ A number `a` is divisible by `b` if `a % b == 0`
 - Prevents impossible triangles (e.g., sides 1, 2, 100)
 - Ensures the shortest distance between two points is a straight line
 
+### Lucas–Lehmer Test for Mersenne Primes
+- A deterministic primality test for numbers of the form \(2^p-1\)
+- Based on properties of Lucas sequences and finite fields
+- Used to discover the largest known primes (e.g., via GIMPS)
+
 ## Code Quality Features
 
 - ✅ Comprehensive input validation
@@ -221,7 +259,7 @@ A number `a` is divisible by `b` if `a % b == 0`
 
 This assignment demonstrates:
 
-- **Mathematical algorithms** - Divisor finding, prime detection, digit extraction
+- **Mathematical algorithms** - Divisor finding, prime detection, digit extraction, Lucas–Lehmer iteration
 - **Input validation** - Range checking, type validation, logical constraints
 - **Loop constructs** - For loops, while loops, flag-based control
 - **List operations** - Appending, length checking, iteration
@@ -239,6 +277,7 @@ This assignment demonstrates:
 | Prime Checker | O(n) | O(d) |
 | Narcissistic Finder | O(n) for range | O(k) where k = count found |
 | Triangle Validator | O(1) | O(1) |
+| Lucas–Lehmer Test | O(p) modular multiplications | O(1) |
 
 ## Project Structure
 
@@ -249,6 +288,9 @@ This assignment demonstrates:
 ├── primeNumbers.py               # Random prime number checker
 ├── narcissisticNumbers.py        # Interactive narcissistic number finder
 ├── part1Q1.py                    # Triangle inequality validator
+├── lucas_lehmer.py               # Lucas–Lehmer test for Mersenne primes
+├── docs/
+│   └── lucas_lehmer.md           # Scholarly documentation of the test
 └── README.md                     # This file
 ```
 
@@ -263,6 +305,11 @@ This assignment demonstrates:
 - There are infinitely many prime numbers (proven by Euclid ~300 BCE)
 - The largest known prime (as of 2024) has over 24 million digits
 - Prime numbers are fundamental to modern cryptography
+
+**Mersenne Primes:**
+- A Mersenne prime is a prime number of the form \(2^p-1\)
+- As of 2024, only 51 Mersenne primes are known
+- The largest known prime is a Mersenne prime with more than 24 million digits, discovered using the Lucas–Lehmer test
 
 ## Contributing
 
